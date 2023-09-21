@@ -50,7 +50,7 @@ export default function Layout({ children, title }) {
               className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk"
             >
               <Link
-                to={"/dashboard/problem"}
+                to={"/dashboard/market"}
                 className="text-gray-300 hover:text-white"
               >
                 Marketplace
@@ -72,7 +72,7 @@ export default function Layout({ children, title }) {
               className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer"
             >
               <Link
-                to={"/dashboard/teaminfo"}
+                to={"/dashboard/submission"}
                 className="text-gray-300 hover:text-white"
               >
                 Submission
