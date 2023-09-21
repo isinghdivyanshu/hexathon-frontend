@@ -99,7 +99,7 @@ export default function Problem() {
           Confirm Statement
         </button>
       </div>
-      <div className={`width-full text-right my-4 ${(psTitle==='' && psDescription==='')||(chances===0) ? 'block':'hidden'}`}>
+      <div className={`width-full text-right my-4 ${(psTitle==='' && psDescription==='')||(chances===0 && psDescription !=="") ? 'block':'hidden'}`}>
         <span className="mx-6 text-sm text-info font-SpaceGrotesk font-semibold">
           Your choice has been confirmed.
         </span>

@@ -9,9 +9,33 @@ import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import UploadIcon from '@mui/icons-material/Upload';
+import axios from '../axios';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export default function Layout({ children, title }) {
+  // const [amount, setAmount] = useState(0)
   // const navigate = useNavigate();
+  const getCart = async () => {
+    try {
+      const res = await axios.get("/api/v1/carts", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      localStorage.setItem("amount",res.data.amount_left)
+    } catch (error) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.detail)
+      } else {
+        toast.error(error?.message)
+      }
+    }
+  }
+
+  useEffect(()=> {
+    getCart()
+  },[])
   return (
     <div
       className="h-screen w-screen bg-cover bg-center relative flex"

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { useEffect, useState } from "react";
 import axios from "../../axios";
@@ -25,13 +25,47 @@ const customStyles = {
 };
 
 export default function Market() {
-  const [typefaces, setTypefaces] = useState("Poppins, Inter");
-  const [colors, setColors] = useState("Neo-pop");
-  const [illustration, setIllustration] = useState("Isometric");
-  const [theme, setTheme] = useState("Minimalism");
+
+  const [cart, setCart] = useState({})
 
   const [categories, setCategories] = useState([]);
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false); // State for the modal
+
+  const navigate = useNavigate()
+
+  const checkout = async () => {
+    try {
+      await axios.post("/api/v1/carts/checkout", {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      navigate("/dashboard/home")
+    } catch (error) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.detail)
+      } else {
+        toast.error(error?.message)
+      }
+    }
+  }
+
+  const getCart = async () => {
+    try {
+      const res = await axios.get("/api/v1/carts", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      setCart(res.data.items_added)
+    } catch (error) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.detail)
+      } else {
+        toast.error(error?.message)
+      }
+    }
+  }
 
   const getCategories = async () => {
     try {
@@ -47,6 +81,7 @@ export default function Market() {
   };
 
   useEffect(() => {
+    getCart()
     getCategories();
   }, []);
 
@@ -83,7 +118,7 @@ export default function Market() {
       <div className="grid grid-cols-2 gap-3">
         {categories?.map((cat, i) => {
           return (
-            <Category name={cat.name} path={cat.id} key={`category${i}`} />
+            <Category items={cart[cat.id]} desc={cat.description} maxnum={cat.max_items} name={cat.name} path={cat.id} key={`category${i}`} />
           );
         })}
       </div>
@@ -103,14 +138,13 @@ export default function Market() {
           </p>
           <div>
             <h1 className="text-lg font-SpaceGrotesk text-medium">
-              Typefaces - <span className="text-green-500">{typefaces}</span>
-              <br />
-              Colors - <span className="text-green-500">{colors}</span>
-              <br />
-              Illustrations -{" "}
-              <span className="text-green-500">{illustration}</span>
-              <br />
-              Theme - <span className="text-green-500">{theme}</span>
+              {categories?.map((category, i) => {
+                return (
+                  <span className='block' key={i}>
+                    {category.name} — <span className="text-green-500">{cart[category.id]?.map((item) => `${item.name} `)}{`(${cart[category.id]?.length || "0"})`}</span>
+                  </span>
+                )
+              })}
             </h1>
           </div>
           <div className="flex w-full justify-end gap-4">
@@ -120,7 +154,7 @@ export default function Market() {
             >
               Cancel
             </button>
-            <button className=" bg-red-600 hover:bg-red-700 w-[20%] px-3 py-1 text-xs text-white rounded-sm font-DelaGothicOne">
+            <button onClick={checkout} className=" bg-red-600 hover:bg-red-700 w-[20%] px-3 py-1 text-xs text-white rounded-sm font-DelaGothicOne">
               Confirm
             </button>
           </div>
@@ -130,21 +164,21 @@ export default function Market() {
   );
 }
 
-function Category({ name, path }) {
+function Category({ name, path, maxnum, desc, items }) {
   return (
     <div className="w-full flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
       <div className="w-full flex flex-col gap-3">
         <h1 className="text-lg text-heading font-bold tracking-wider">
           {name}
         </h1>
+        <p>Maximum of {maxnum} items can be bought from this category.</p>
         <p className="text-sm w-1/2 text-content">
-          These are the only {name} that can be used in your designs.You may
-          purchase multiple {name}.
+          {desc}
         </p>
       </div>
       <div className="w-full flex justify-between mt-4">
-        <div className="text-green-500">Selected: Gilroy</div>
-        <Link to={`/dashboard/market/category/${path}`}>
+        {items?.length && <div className="text-green-500">Selected: {items?.map((item) => `${item.name} `)}{`(${items?.length})`}</div>}
+        <Link className='ml-auto' to={`/dashboard/market/category/${path}`}>
           <button className="bg-red-600 hover:bg-red-700 px-5 py-1 text-sm rounded-sm font-DelaGothicOne">
             Choose
           </button>
