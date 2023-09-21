@@ -16,7 +16,7 @@ export default function Problem() {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
-      setPSDescription(res?.data?.description)
+      setPSDescription(res?.data?.one_liner)
       setPSTitle(res?.data?.name)
       setChances(res?.data?.generations_left)
       console.log(res.data)
@@ -98,6 +98,11 @@ export default function Problem() {
         <button onClick={confirmPS} className="bg-red-600 hover:bg-red-700 px-8 py-1 text-sm rounded-sm font-DelaGothicOne">
           Confirm Statement
         </button>
+      </div>
+      <div className={`width-full text-right my-4 ${(psTitle==='' && psDescription==='')||(chances===0) ? 'block':'hidden'}`}>
+        <span className="mx-6 text-sm text-info font-SpaceGrotesk font-semibold">
+          Your choice has been confirmed.
+        </span>
       </div>
     </Layout>
   );
