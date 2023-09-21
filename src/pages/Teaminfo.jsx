@@ -50,7 +50,7 @@ export default function Teaminfo() {
 
   return (
     <Layout title="Team Info">
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row w-full justify-between">
         <h1 className="w-max mt-3 mb-6 text-2xl">
           Manage Team
         </h1>

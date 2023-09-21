@@ -2,7 +2,9 @@
 import Layout from "../components/Layout";
 import HexathonLogo from "../assets/hexathonLogo.svg";
 import DownArrow from "../assets/downArrow.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from '../axios'
+import { toast } from 'react-toastify';
 
 export default function Home() {
   //react function to expand a div for overflow
@@ -13,6 +15,28 @@ export default function Home() {
     setIsExpanded(!isExpanded);
     console.log(isExpanded);
   };
+
+  const [psTitle, setPSTitle] = useState("")
+  const [psDescription, setPSDescription] = useState("")
+
+  const getPS = async () => {
+    try {
+      const res = await axios.get("/api/v1/problemStatements/team", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      setPSDescription(res?.data?.description)
+      setPSTitle(res?.data?.name)
+      console.log(res.data)
+    } catch (error) {
+      toast.error(error?.response?.data?.detail)
+    }
+  }
+
+  useEffect(() => {
+    getPS()
+  }, [])
 
   function OwnedAssets({ assetType, asset }) {
     return (
@@ -25,7 +49,7 @@ export default function Home() {
 
   return (
     <Layout title={"Welcome"}>
-      <div>
+      <div className={`${(psTitle==="" && psDescription==="") ? "hidden":"block"}`}>
         <h1 className="w-max mt-3 mb-6 text-2xl">Problem Statement</h1>
         <div
           className={`bg-[#752E324D] p-5 border-2 border-white rounded overflow-hidden transition-max-height ${
@@ -33,7 +57,7 @@ export default function Home() {
           }`}
         >
           <div className="flex justify-between mb-3">
-            <h1 className="w-full text-2xl m-3">Problem Title</h1>
+            <h1 className="w-full text-2xl m-3">{psTitle}</h1>
             <button
               className="mr-2 h-12 w-12 bg-center bg-no-repeat bg-cover"
               style={{ backgroundImage: `url(${DownArrow})` }}
@@ -41,20 +65,7 @@ export default function Home() {
             />
           </div>
           <p className="text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-            suscipit inventore quam ad veniam placeat temporibus esse
-            architecto, ratione ipsum sunt expedita doloremque maxime incidunt
-            quibusdam nesciunt qui cum vel! Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Maiores, assumenda minima? Voluptate
-            maiores doloremque et nemo inventore molestiae provident quam?
-            Blanditiis ipsam officia perspiciatis nobis repellat deleniti magnam
-            delectus debitis. Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Placeat vero, temporibus corporis impedit cupiditate saepe at
-            quidem quae, quo quos commodi. Maiores delectus aliquam excepturi,
-            tenetur sint quas voluptatibus nisi! Lorem ipsum, dolor sit amet
-            consectetur adipisicing elit. Nihil totam incidunt modi sapiente?
-            Modi, recusandae officia doloremque expedita obcaecati reprehenderit
-            natus minus quam dolore rem repellendus. Amet voluptatem est nemo?
+            {psDescription}
           </p>
         </div>
       </div>
@@ -64,7 +75,7 @@ export default function Home() {
         <div>
           <h1 className="w-full mt-3 mb-6 text-2xl">Owned Assets</h1>
         </div>
-        <div className="flex justify-between">
+        <div className="flex flex-wrap">
           <OwnedAssets assetType="Typefaces" asset="Poppins, Inter" />
           <OwnedAssets assetType="Theme" asset="Minimalism" />
           <OwnedAssets assetType="Color Pallete" asset="Neo-pop" />
@@ -73,9 +84,9 @@ export default function Home() {
       </div>
 
       <div>
-        <h1 className="w-full mt-3 mb-6 text-2xl">About</h1>
-        <div className="flex w-full">
-          <p className="w-3/5 text-sm">
+        <h1 className="w-full mt-6 mb-6 text-2xl">About</h1>
+        <div className="flex lg:flex-row flex-col w-full">
+          <p className="lg:w-3/5 text-sm">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis eaque
             delectus quo at molestiae itaque, aspernatur quam consequuntur
             beatae sunt mollitia ad! Accusantium quasi magnam aut eos explicabo.
@@ -91,7 +102,7 @@ export default function Home() {
           <img
             src={HexathonLogo}
             alt="Hexathon Logo"
-            className="max-w-[45rem] ml-40 w-80 h-auto"
+            className="max-w-[45rem] lg:w-2/5"
           />
         </div>
       </div>
