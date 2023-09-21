@@ -25,47 +25,50 @@ const customStyles = {
 };
 
 export default function Market() {
-
-  const [cart, setCart] = useState({})
+  const [cart, setCart] = useState({});
 
   const [categories, setCategories] = useState([]);
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false); // State for the modal
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const checkout = async () => {
     try {
-      await axios.post("/api/v1/carts/checkout", {}, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+      await axios.post(
+        "/api/v1/carts/checkout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      })
-      navigate("/dashboard/home")
+      );
+      navigate("/dashboard/home");
     } catch (error) {
       if (error?.response) {
-        toast.error(error?.response?.data?.detail)
+        toast.error(error?.response?.data?.detail);
       } else {
-        toast.error(error?.message)
+        toast.error(error?.message);
       }
     }
-  }
+  };
 
   const getCart = async () => {
     try {
       const res = await axios.get("/api/v1/carts", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      setCart(res.data.items_added)
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCart(res.data.items_added);
     } catch (error) {
       if (error?.response) {
-        toast.error(error?.response?.data?.detail)
+        toast.error(error?.response?.data?.detail);
       } else {
-        toast.error(error?.message)
+        toast.error(error?.message);
       }
     }
-  }
+  };
 
   const getCategories = async () => {
     try {
@@ -81,7 +84,7 @@ export default function Market() {
   };
 
   useEffect(() => {
-    getCart()
+    getCart();
     getCategories();
   }, []);
 
@@ -115,10 +118,17 @@ export default function Market() {
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-5">
         {categories?.map((cat, i) => {
           return (
-            <Category items={cart[cat.id]} desc={cat.description} maxnum={cat.max_items} name={cat.name} path={cat.id} key={`category${i}`} />
+            <Category
+              items={cart[cat.id]}
+              desc={cat.description}
+              maxnum={cat.max_items}
+              name={cat.name}
+              path={cat.id}
+              key={`category${i}`}
+            />
           );
         })}
       </div>
@@ -140,10 +150,14 @@ export default function Market() {
             <h1 className="text-lg font-SpaceGrotesk text-medium">
               {categories?.map((category, i) => {
                 return (
-                  <span className='block' key={i}>
-                    {category.name} — <span className="text-green-500">{cart[category.id]?.map((item) => `${item.name} `)}{`(${cart[category.id]?.length || "0"})`}</span>
+                  <span className="block" key={i}>
+                    {category.name} —{" "}
+                    <span className="text-green-500">
+                      {cart[category.id]?.map((item) => `${item.name} `)}
+                      {`(${cart[category.id]?.length || "0"})`}
+                    </span>
                   </span>
-                )
+                );
               })}
             </h1>
           </div>
@@ -154,7 +168,10 @@ export default function Market() {
             >
               Cancel
             </button>
-            <button onClick={checkout} className=" bg-red-600 hover:bg-red-700 w-[20%] px-3 py-1 text-xs text-white rounded-sm font-DelaGothicOne">
+            <button
+              onClick={checkout}
+              className=" bg-red-600 hover:bg-red-700 w-[20%] px-3 py-1 text-xs text-white rounded-sm font-DelaGothicOne"
+            >
               Confirm
             </button>
           </div>
@@ -172,13 +189,16 @@ function Category({ name, path, maxnum, desc, items }) {
           {name}
         </h1>
         <p>Maximum of {maxnum} items can be bought from this category.</p>
-        <p className="text-sm w-1/2 text-content">
-          {desc}
-        </p>
+        <p className="text-sm w-1/2 text-content">{desc}</p>
       </div>
       <div className="w-full flex justify-between mt-4">
-        {items?.length && <div className="text-green-500">Selected: {items?.map((item) => `${item.name} `)}{`(${items?.length})`}</div>}
-        <Link className='ml-auto' to={`/dashboard/market/category/${path}`}>
+        {items?.length && (
+          <div className="text-green-500">
+            Selected: {items?.map((item) => `${item.name} `)}
+            {`(${items?.length})`}
+          </div>
+        )}
+        <Link className="ml-auto" to={`/dashboard/market/category/${path}`}>
           <button className="bg-red-600 hover:bg-red-700 px-5 py-1 text-sm rounded-sm font-DelaGothicOne">
             Choose
           </button>
