@@ -6,7 +6,7 @@ export default function Problem() {
       <h1 className="w-full mt-3 mb-6 text-xl font-DelaGothicOne text-heading">
         Generate your problem statement
       </h1>
-      <div className="flex flex-col bg-black bg-opacity-40 p-5 border-2 border-white rounded font-SpaceGrotesk">
+      <div className="flex flex-col bg-[#752E324D] p-5 border-2 border-white rounded font-SpaceGrotesk">
         <h1 className="text-xl mb-6 text-heading">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </h1>

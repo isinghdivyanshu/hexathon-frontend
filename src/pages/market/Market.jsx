@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
 
@@ -30,7 +31,7 @@ export default function Market() {
 
 function Category({ name, path }) {
   return (
-    <div className="w-full flex flex-col justify-between bg-black bg-opacity-40 p-2 border-2 border-white rounded-md font-SpaceGrotesk">
+    <div className="w-full flex flex-col justify-between bg-[#752E324D] p-2 border-2 border-white rounded-md font-SpaceGrotesk">
       <div className="w-full flex flex-col gap-3">
         <h1 className="text-lg text-heading font-bold">{name}</h1>
         <p className="text-sm w-1/2 text-content">

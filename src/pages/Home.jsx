@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Layout from "../components/Layout";
 import HexathonLogo from "../assets/hexathonLogo.svg";
 import DownArrow from "../assets/downArrow.svg";
@@ -15,7 +16,7 @@ export default function Home() {
 
   function OwnedAssets({ assetType, asset }) {
     return (
-      <div className=" relative bg-black bg-opacity-40 p-5 border-2 border-white rounded m-2 w-64 h-32 ">
+      <div className=" relative bg-[#752E324D] p-5 border-2 border-white rounded m-2 w-64 h-32 ">
         <h1 className="w-full text-xl">{assetType}</h1>
         <p className="absolute bottom-5">{asset}</p>
       </div>
@@ -27,14 +28,14 @@ export default function Home() {
       <div>
         <h1 className="w-max mt-3 mb-6 text-2xl">Problem Statement</h1>
         <div
-          className={`bg-black bg-opacity-40 p-5 border-2 border-white rounded overflow-hidden transition-max-height ${
+          className={`bg-[#752E324D] p-5 border-2 border-white rounded overflow-hidden transition-max-height ${
             isExpanded ? "max-h-full" : "max-h-60"
           }`}
         >
           <div className="flex justify-between mb-3">
             <h1 className="w-full text-2xl m-3">Problem Title</h1>
             <button
-              className="mr-2 h-12 w-12 bg-center bg-no-repeat bg-cover hover:scale-125"
+              className="mr-2 h-12 w-12 bg-center bg-no-repeat bg-cover"
               style={{ backgroundImage: `url(${DownArrow})` }}
               onClick={toggleExpansion}
             />
@@ -94,7 +95,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="flex flex-col bg-black bg-opacity-40 p-5 border-2 border-white rounded">
+      <div className="flex flex-col bg-[#752E324D] p-5 border-2 border-white rounded">
         <h1 className="w-full mt-3 mb-6 text-2xl">Timeline</h1>
         <img
           src={HexathonLogo}

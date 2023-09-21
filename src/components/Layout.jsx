@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
-import Background from "../assets/background.svg";
+import Background from "../assets/defaultbg.svg";
 import hexcoin from "../assets/hexcoin.svg";
 
 export default function Layout({ children, title }) {
@@ -55,6 +56,17 @@ export default function Layout({ children, title }) {
                 Marketplace
               </Link>
             </li>
+            <li
+              onClick={() => navigate("/dashboard/teaminfo")}
+              className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer"
+            >
+              <Link
+                to={"/dashboard/teaminfo"}
+                className="text-gray-300 hover:text-white"
+              >
+                Team Info
+              </Link>
+            </li>
             {/* Add more links as needed */}
           </ul>
         </nav>
@@ -75,10 +87,7 @@ export default function Layout({ children, title }) {
             {title}
           </h1>
           <div className="flex items-center w-32 h-10 rounded-md bg-stone-300 justify-evenly font-DelaGothicOne">
-            <img
-              src={hexcoin}
-              className="inline w-[25%] h-[90%]"
-            />
+            <img src={hexcoin} className="inline w-[25%] h-[90%]" />
             5000
           </div>
         </div>

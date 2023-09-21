@@ -1,6 +1,6 @@
 export default function Card({ name }) {
   return (
-    <div className="flex flex-col min-w-[16rem] border-2 border-white p-4 rounded-lg">
+    <div className="flex flex-col min-w-[16rem] bg-[#411623] border-2 border-white p-4 rounded-lg">
       <img className="w-[80%] h-[7rem] mb-4 self-center" />
       <h2 className="text-lg mt-4 font-DelaGothicOne text-heading">Poppins</h2>
       <p className="text-sm my-4 font-SpaceGrotesk text-content">
