@@ -11,7 +11,7 @@ import Typeface from "./pages/market/Typeface";
 import Theme from "./pages/market/Theme";
 import ColorPalette from "./pages/market/ColorPalette";
 import IllustrationStyle from "./pages/market/IllustrationStyle";
-
+import Submission from "./pages/Submission";
 
 function App() {
   return (
@@ -25,6 +25,10 @@ function App() {
             <Route path="/dashboard/home" element={<Home />}></Route>
             <Route path="/dashboard/problem" element={<Problem />}></Route>
             <Route path="/dashboard/market" element={<Market />}></Route>
+            <Route
+              path="/dashboard/submission"
+              element={<Submission />}
+            ></Route>
             <Route path="/dashboard/teaminfo" element={<Teaminfo />}></Route>
             <Route
               path="/dashboard/market/typeface"
