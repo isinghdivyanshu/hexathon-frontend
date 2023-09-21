@@ -10,6 +10,7 @@ export default function Home() {
   //react function to expand a div for overflow
   const [isExpanded, setIsExpanded] = useState(false);
   const [categories, setCategories] = useState([])
+  const [confirmedProble, setConfirmed]= useState(false)
   const [cart, setCart] = useState({})
 
   const getCategories = async () => {
@@ -61,6 +62,7 @@ export default function Home() {
       })
       setPSDescription(res?.data?.description)
       setPSTitle(res?.data?.name)
+      setConfirmed(res?.data?.generations_left===0)
       console.log(res.data)
     } catch (error) {
       toast.error(error?.response?.data?.detail)
@@ -108,7 +110,7 @@ export default function Home() {
 
   return (
     <Layout title={"Welcome"}>
-      <div className={`${(psTitle==="" && psDescription==="") ? "hidden":"block"}`}>
+      <div className={`${(psTitle==="" && psDescription==="") || !confirmedProble ? "hidden":"block"}`}>
         <h1 className="w-max mt-3 mb-6 text-2xl">Problem Statement</h1>
         <div
           className={`bg-[#752E324D] p-5 border-2 border-white rounded overflow-hidden transition-max-height ${
