@@ -33,7 +33,9 @@ function Category({ name, path }) {
   return (
     <div className="w-full flex flex-col justify-between bg-[#752E324D] p-2 border-2 border-white rounded-md font-SpaceGrotesk">
       <div className="w-full flex flex-col gap-3">
-        <h1 className="text-lg text-heading font-bold">{name}</h1>
+        <h1 className="text-lg text-heading font-bold tracking-wider">
+          {name}
+        </h1>
         <p className="text-sm w-1/2 text-content">
           These are the only {name} that can be used in your designs.You may
           purchase multiple {name}.

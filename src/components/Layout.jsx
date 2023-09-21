@@ -8,7 +8,7 @@ export default function Layout({ children, title }) {
   const navigate = useNavigate();
   return (
     <div
-      className="h-screen w-screen bg-cover bg-center relative flex bg-black bg-opacity-60"
+      className="h-screen w-screen bg-cover bg-center relative flex"
       style={{
         backgroundImage: `url(${Background})`,
       }}
@@ -50,7 +50,7 @@ export default function Layout({ children, title }) {
               className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk"
             >
               <Link
-                to={"/dashboard/problem"}
+                to={"/dashboard/market"}
                 className="text-gray-300 hover:text-white"
               >
                 Marketplace
@@ -65,6 +65,17 @@ export default function Layout({ children, title }) {
                 className="text-gray-300 hover:text-white"
               >
                 Team Info
+              </Link>
+            </li>
+            <li
+              onClick={() => navigate("/dashboard/submission")}
+              className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer"
+            >
+              <Link
+                to={"/dashboard/submission"}
+                className="text-gray-300 hover:text-white"
+              >
+                Submission
               </Link>
             </li>
             {/* Add more links as needed */}
@@ -86,7 +97,7 @@ export default function Layout({ children, title }) {
           <h1 className="text-4xl grow my-2 font-DelaGothicOne text-heading">
             {title}
           </h1>
-          <div className="flex items-center w-32 h-10 rounded-md bg-stone-300 justify-evenly font-DelaGothicOne">
+          <div className="flex items-center w-32 h-10 rounded-md bg-[#250A19B2] justify-evenly font-DelaGothicOne">
             <img src={hexcoin} className="inline w-[25%] h-[90%]" />
             5000
           </div>
