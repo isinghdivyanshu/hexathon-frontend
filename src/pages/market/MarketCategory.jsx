@@ -36,7 +36,7 @@ export default function MarketCategory() {
       <div className="flex gap-8 overflow-x-scroll no-scrollbar">
         {catItems?.map((item, i) => {
             return (
-                <Card name={item.name} key={`item${i}`} />
+                <Card price={item.price} url={item.photo_url} name={item.name} key={`item${i}`} />
             )
         })}
       </div>

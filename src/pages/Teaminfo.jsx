@@ -65,7 +65,7 @@ export default function Teaminfo() {
           Team name cannot be changed once created.
         </p>
         <div className="flex flex-row justify-between">
-          <h1 className='text-xl'>{teamName}</h1>
+          <p className='text-2xl'>{teamName}</p>
           {/* <input className="w-5/6 mx-3 py-3 my-6 pl-8 bg-[#411623] text-[#EAD3C1] rounded-md" type="text" placeholder="Alpha Design" /> */}
           {/* <button className=" w-40 bg-red-600 hover:bg-red-700 mx-10 my-6 py-1 text-xl rounded-md">
             Save

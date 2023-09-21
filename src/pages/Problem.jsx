@@ -42,7 +42,12 @@ export default function Problem() {
 
         console.log(res.data)
       } catch (error) {
-        toast.error(error?.response?.data?.detail)
+        if (error?.response) {
+          toast.error(error?.response?.data?.detail)
+        } else {
+          toast.error(error?.message)
+        }
+        
       }
     }
 
@@ -51,7 +56,7 @@ export default function Problem() {
       <h1 className="w-full mt-3 mb-6 text-xl font-DelaGothicOne text-heading">
         Generate your problem statement
       </h1>
-      <div className="flex flex-col bg-[#752E324D] p-5 border-2 border-white rounded font-SpaceGrotesk ">
+      <div className="flex flex-col bg-[#752E324D] p-5 border-2 border-white/10 rounded font-SpaceGrotesk ">
         <h1 className={`text-xl mb-6 text-heading ${(psTitle==='' && psDescription==='') ? 'hidden':'block'}`}>
           {psTitle}
         </h1>

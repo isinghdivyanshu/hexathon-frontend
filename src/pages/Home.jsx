@@ -106,7 +106,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="flex flex-col bg-[#752E324D] p-5 border-2 border-white rounded">
+      <div className="flex flex-col bg-[#752E324D] p-5 border-2 mt-8 border-white rounded">
         <h1 className="w-full mt-3 mb-6 text-2xl">Timeline</h1>
         <img
           src={HexathonLogo}

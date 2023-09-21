@@ -56,7 +56,7 @@ export default function Market() {
 
 function Category({ name, path }) {
   return (
-    <div className="w-full flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/40 rounded-md font-SpaceGrotesk">
+    <div className="w-full flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
       <div className="w-full flex flex-col gap-3">
         <h1 className="text-lg text-heading font-bold tracking-wider">
           {name}
