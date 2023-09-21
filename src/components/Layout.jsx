@@ -84,7 +84,10 @@ export default function Layout({ children, title }) {
 
         {/* Logout button */}
         <div className="mt-auto">
-          <button className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md w-full font-DelaGothicOne">
+          <button onClick={() => {
+            localStorage.removeItem("token");
+            window.location.reload()
+          }} className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md w-full font-DelaGothicOne">
             Logout
           </button>
         </div>
@@ -99,7 +102,7 @@ export default function Layout({ children, title }) {
           </h1>
           <div className="flex items-center w-32 h-10 rounded-md bg-[#250A19B2] justify-evenly font-DelaGothicOne">
             <img src={hexcoin} className="inline w-[25%] h-[90%]" />
-            5000
+            {localStorage.getItem("amount")}
           </div>
         </div>
 
