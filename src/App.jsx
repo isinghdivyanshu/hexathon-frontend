@@ -7,14 +7,11 @@ import Home from "./pages/Home";
 import Problem from "./pages/Problem";
 import Market from "./pages/market/Market";
 import Teaminfo from "./pages/Teaminfo";
-import Typeface from "./pages/market/Typeface";
-import Theme from "./pages/market/Theme";
-import ColorPalette from "./pages/market/ColorPalette";
-import IllustrationStyle from "./pages/market/IllustrationStyle";
 import Submission from "./pages/Submission";
 import GuardedRoute from './components/RouteGuard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import MarketCategory from './pages/market/MarketCategory';
 
 function App() {
   return (
@@ -47,17 +44,8 @@ function App() {
               ></Route>
               <Route path="/dashboard/teaminfo" element={<Teaminfo />}></Route>
               <Route
-                path="/dashboard/market/typeface"
-                element={<Typeface />}
-              ></Route>
-              <Route path="/dashboard/market/theme" element={<Theme />}></Route>
-              <Route
-                path="/dashboard/market/color_palette"
-                element={<ColorPalette />}
-              ></Route>
-              <Route
-                path="/dashboard/market/illustration_style"
-                element={<IllustrationStyle />}
+                path="/dashboard/market/category/:id"
+                element={<MarketCategory />}
               ></Route>
             </Route>
           </Routes>

@@ -22,7 +22,7 @@ export default function Layout({ children, title }) {
       {/* Sidebar */}
       <div className="w-1/4 min-w-[300] p-4 m-5 rounded-xl bg-[#250A19B2] text-white flex flex-col">
         {/* Logo */}
-        <div className="text-center mb-4 h-min">
+        <div className="text-center mb-4 h-24">
           <img src={logo} alt="Logo" className="mx-auto" />
         </div>
 
