@@ -11,7 +11,7 @@ export default function Teaminfo() {
 
   const getTeam = async () => {
     try {
-      const res = await axios.get("/api/v1/teams/frontend-team", {
+      const res = await axios.get("/api/v1/teams/me", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
@@ -40,7 +40,7 @@ export default function Teaminfo() {
           className="w-16 h-16 rounded-full ml-8 mr-16"
         /> */}
         <div className="flex flex-col">
-          <h1 className="text-xl">{name}</h1>
+          <p className="text-xl">{name}</p>
           {/* <p className="text-sm">{leader ? "Teamleader" : ""}</p> */}
 
         </div>
