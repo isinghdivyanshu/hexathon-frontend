@@ -18,7 +18,7 @@ export default function Teaminfo() {
       })
       console.log(res)
       setTeamName(res?.data?.name)
-      setMembers(res?.data?.members)
+      setMembers(res?.data?.members || [])
     } catch (error) {
       setTeamName("Oops.")
       setMembers(["Err..."])

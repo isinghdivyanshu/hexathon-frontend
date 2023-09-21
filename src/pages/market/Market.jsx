@@ -147,7 +147,7 @@ export default function Market() {
               })}
             </h1>
           </div>
-          <div className="flex w-full justify-end gap-4">
+          <div className="flex w-full justify-end gap-4 mt-4">
             <button
               onClick={closeCheckoutModal}
               className="border-2 border-red-600 text-red-600 hover:border-red-700 hover:text-red-700 w-[20%] px-3 py-1 text-xs rounded-sm font-DelaGothicOne"
