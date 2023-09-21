@@ -8,26 +8,27 @@ import Problem from "./pages/Problem";
 import Market from "./pages/market/Market";
 import Teaminfo from "./pages/Teaminfo";
 import Submission from "./pages/Submission";
-import GuardedRoute from './components/RouteGuard';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import MarketCategory from './pages/market/MarketCategory';
+import GuardedRoute from "./components/RouteGuard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MarketCategory from "./pages/market/MarketCategory";
+import warning from "./assets/mobilewarning.svg";
 
 function App() {
   return (
     <>
       <ToastContainer
-      position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="colored"
-    />
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="md:block hidden">
         <Router>
           <Routes>
@@ -51,7 +52,10 @@ function App() {
           </Routes>
         </Router>
       </div>
-      <div className="md:hidden block">Please open on mobile</div>
+      <div
+        className="md:hidden block w-screen h-screen"
+        style={{ backgroundImage: `url(${warning})` }}
+      ></div>
     </>
   );
 }
