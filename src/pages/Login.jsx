@@ -1,8 +1,37 @@
-import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import Background from "../assets/defaultbg.svg";
+import { useState } from 'react';
+import axios from '../axios'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function Login() {
+  const [teamName, setTeamName] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('/api/v1/auth/login', {
+        name: teamName,
+        password,
+      });
+
+      if (response.status ===200 && response.data) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('amount', response.data.amount);
+        console.log(response.data)
+        navigate("/dashboard/home")
+      }
+    } catch (error) {
+      // toast 
+      console.log(error)
+      toast.error(error.response.data.detail)
+    }
+  };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center relative"
@@ -19,20 +48,22 @@ export default function Login() {
         <h2 className="text-2xl font-semibold mb-4 text-white">
           Nice to see you again.
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               className="block text-white text-sm font-semibold mb-2"
               htmlFor="email"
             >
-              Email
+              Team Name
             </label>
             <input
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 fliter;
               "
-              type="email"
+              required
               id="email"
-              placeholder="Enter your email"
+              placeholder="Enter your team name"
+              value={teamName}
+              onChange={e=>setTeamName(e.currentTarget.value)}
             />
           </div>
           <div className="mb-4">
@@ -46,16 +77,26 @@ export default function Login() {
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               type="password"
               id="password"
+              required
               placeholder="Enter your password"
+              value={password}
+              onChange={e=>setPassword(e.currentTarget.value)}
             />
           </div>
           <div className="mb-4 text-right">
-            <Link
-              to={"#"}
-              className="text-blue-500 text-sm font-medium hover:underline"
+            <p
+              // to={"#"}
+              className="text-white text-sm font-medium"
             >
-              Forgot Password?
-            </Link>
+              Forgot Password? 
+            </p>
+            <p
+              // to={"#"}
+              className="text-white text-sm font-medium"
+            >
+              Approach a GDSC member or the check-in desk.
+            </p>
+            
           </div>
           <button
             type="submit"
@@ -63,7 +104,7 @@ export default function Login() {
           >
             Sign In
           </button>
-          <div className="mt-4 text-center">
+          {/* <div className="mt-4 text-center">
             <p className="text-sm text-white">Don&apos;t have an account?</p>
             <Link
               to={"/register"}
@@ -71,7 +112,7 @@ export default function Login() {
             >
               Register Now.
             </Link>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

@@ -1,11 +1,17 @@
 /* eslint-disable react/prop-types */
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import Background from "../assets/defaultbg.svg";
 import hexcoin from "../assets/hexcoin.svg";
+import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from '@mui/icons-material/Home';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Groups2Icon from '@mui/icons-material/Groups2';
+import UploadIcon from '@mui/icons-material/Upload';
 
 export default function Layout({ children, title }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <div
       className="h-screen w-screen bg-cover bg-center relative flex"
@@ -14,84 +20,117 @@ export default function Layout({ children, title }) {
       }}
     >
       {/* Sidebar */}
-      <div className="lg:w-1/6 min-w-[300] p-4 m-5 rounded-xl bg-[#250A19B2] text-white flex flex-col">
+      <div className="w-1/4 min-w-[300] p-4 m-5 rounded-xl bg-[#250A19B2] text-white flex flex-col">
         {/* Logo */}
-        <div className="text-center mb-4 h-min">
+        <div className="text-center mb-4 h-24">
           <img src={logo} alt="Logo" className="mx-auto" />
         </div>
 
         {/* Nav links */}
         <nav className="mt-10">
           <ul className="flex flex-col gap-2 ">
-            <li
-              onClick={() => navigate("/dashboard/home")}
-              className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk"
-            >
-              <Link
+            <NavLink
+                className={({ isActive, isPending }) =>
+                  (isPending ? "pending" : isActive ? "text-white " : "")+" p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk flex items-center gap-2"
+                }
                 to={"/dashboard/home"}
-                className="text-gray-300 hover:text-white"
-              >
-                Home
-              </Link>
-            </li>
-            <li
-              onClick={() => navigate("/dashboard/problem")}
-              className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk"
             >
-              <Link
+              {({ isActive }) => (
+                <>
+                  <p className={`${isActive && "text-white"}`}>
+                    <HomeIcon />
+                  </p>
+                  <p className={`${isActive && "text-white"}`}>
+                    Home
+                  </p>
+                </>
+              )}
+            </NavLink>
+            <NavLink
+                className={({ isActive, isPending }) =>
+                  (isPending ? "pending" : isActive ? "text-white " : "")+" p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk flex items-center gap-2"
+                }
                 to={"/dashboard/problem"}
-                className="text-gray-300 hover:text-white"
-              >
-                Problem Statement
-              </Link>
-            </li>
-            <li
-              onClick={() => navigate("/dashboard/market")}
-              className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk"
             >
-              <Link
+              {({ isActive }) => (
+                <>
+                  <p className={`${isActive && "text-white"}`}>
+                    <SportsBasketballIcon />
+                  </p>
+                  <p className={`${isActive && "text-white"}`}>
+                    Problem Statement
+                  </p>
+                </>
+              )}
+            </NavLink>
+            <NavLink
+                className={({ isActive, isPending }) =>
+                  (isPending ? "pending" : isActive ? "text-white " : "")+" p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk flex items-center gap-2"
+                }
                 to={"/dashboard/market"}
-                className="text-gray-300 hover:text-white"
-              >
-                Marketplace
-              </Link>
-            </li>
-            <li
-              onClick={() => navigate("/dashboard/teaminfo")}
-              className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer"
             >
-              <Link
+              {({ isActive }) => (
+                <>
+                  <p className={`${isActive && "text-white"}`}>
+                    <ShoppingCartIcon />
+                  </p>
+                  <p className={`${isActive && "text-white"}`}>
+                    Marketplace
+                  </p>
+                </>
+              )}
+            </NavLink>
+            <NavLink
+                className={({ isActive, isPending }) =>
+                  (isPending ? "pending" : isActive ? "text-white " : "")+" p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk flex items-center gap-2"
+                }
                 to={"/dashboard/teaminfo"}
-                className="text-gray-300 hover:text-white"
-              >
-                Team Info
-              </Link>
-            </li>
-            <li
-              onClick={() => navigate("/dashboard/submission")}
-              className="p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer"
             >
-              <Link
+              {({ isActive }) => (
+                <>
+                  <p className={`${isActive && "text-white"}`}>
+                    <Groups2Icon />
+                  </p>
+                  <p className={`${isActive && "text-white"}`}>
+                    Team Info
+                  </p>
+                </>
+              )}
+            </NavLink>
+            <NavLink
+                className={({ isActive, isPending }) =>
+                  (isPending ? "pending" : isActive ? "text-white " : "")+" p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk flex items-center gap-2"
+                }
                 to={"/dashboard/submission"}
-                className="text-gray-300 hover:text-white"
-              >
-                Submission
-              </Link>
-            </li>
-            {/* Add more links as needed */}
+            >
+              {({ isActive }) => (
+                <>
+                  <p className={`${isActive && "text-white"}`}>
+                    <UploadIcon />
+                  </p>
+                  <p className={`${isActive && "text-white"}`}>
+                    Submission
+                  </p>
+                </>
+              )}
+            </NavLink>
           </ul>
         </nav>
 
         {/* Logout button */}
         <div className="mt-auto">
-          <button className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md w-full font-DelaGothicOne">
-            Logout
+          <button onClick={() => {
+            localStorage.removeItem("token");
+            window.location.reload()
+          }} className="hover:bg-black hover:bg-opacity-40 py-2 px-4 rounded-md w-full font-DelaGothicOne flex items-center justify-center gap-2">
+            <LogoutIcon style={{color:"rgba(234, 211, 193, 0.6)"}} />
+            <p>Logout</p>
           </button>
         </div>
       </div>
 
       {/* Main content */}
-      <div className="lg:w-4/5 flex-grow p-4 overflow-y-scroll no-scrollbar">
+      <div className="w-3/4 flex-grow p-4 overflow-y-scroll no-scrollbar">
         {/* Page title */}
         <div className="text-white flex mb-4 w-full items-center">
           <h1 className="text-4xl grow my-2 font-DelaGothicOne text-heading">
@@ -99,7 +138,7 @@ export default function Layout({ children, title }) {
           </h1>
           <div className="flex items-center w-32 h-10 rounded-md bg-[#250A19B2] justify-evenly font-DelaGothicOne">
             <img src={hexcoin} className="inline w-[25%] h-[90%]" />
-            5000
+            {localStorage.getItem("amount")}
           </div>
         </div>
 

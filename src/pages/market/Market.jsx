@@ -1,8 +1,28 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
+import { useEffect, useState } from 'react';
+import axios from '../../axios';
+import { toast } from 'react-toastify';
 
 export default function Market() {
+  const [categories, setCategories] = useState([])
+  const getCategories = async () => {
+    try {
+      const response = await axios.get("/api/v1/categories", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      setCategories(response.data)
+    } catch (error) {
+      toast.error(error?.response?.data?.detail)
+    }
+  }
+
+  useEffect(() => {
+    getCategories()
+  }, [])
   return (
     <Layout title={"Marketplace"}>
       <div className="flex justify-between items-center mb-4">
@@ -20,10 +40,15 @@ export default function Market() {
         </button>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <Category name={"Typefaces"} path={"typeface"} />
+        {categories?.map((cat, i) => {
+          return (
+            <Category name={cat.name} path={cat.id} key={`category${i}`} />
+          )
+        })}
+        {/* <Category name={"Typefaces"} path={"typeface"} />
         <Category name={"Themes"} path={"theme"} />
         <Category name={"Color Palette"} path={"color_palette"} />
-        <Category name={"Illustration Style"} path={"illustration_style"} />
+        <Category name={"Illustration Style"} path={"illustration_style"} /> */}
       </div>
     </Layout>
   );
@@ -31,7 +56,7 @@ export default function Market() {
 
 function Category({ name, path }) {
   return (
-    <div className="w-full flex flex-col justify-between bg-[#752E324D] p-2 border-2 border-white rounded-md font-SpaceGrotesk">
+    <div className="w-full flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
       <div className="w-full flex flex-col gap-3">
         <h1 className="text-lg text-heading font-bold tracking-wider">
           {name}
@@ -43,7 +68,7 @@ function Category({ name, path }) {
       </div>
       <div className="w-full flex justify-between mt-4">
         <div className="text-green-500">Selected: Gilroy</div>
-        <Link to={`/dashboard/market/${path}`}>
+        <Link to={`/dashboard/market/category/${path}`}>
           <button className="bg-red-600 hover:bg-red-700 px-5 py-1 text-sm rounded-sm font-DelaGothicOne">
             Choose
           </button>
