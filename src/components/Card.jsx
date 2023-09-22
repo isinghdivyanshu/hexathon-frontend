@@ -49,7 +49,7 @@ export default function Card({ name, id, price, url, incart }) {
   };
   return (
     <div className="flex flex-col min-w-[16rem] justify-evenly bg-[#411623] border-2 border-white/10 p-4 rounded-lg">
-      <img src={url} className="w-full h-auto mb-4 self-center" />
+      <img src={url} className="w-full h-52 mb-4 self-center" />
       <h2 className="text-lg mt-4 font-DelaGothicOne text-heading">{name}</h2>
       <p className="text-sm my-4 font-SpaceGrotesk text-content">
         These are the only {name} that can be used in your designs.You may
