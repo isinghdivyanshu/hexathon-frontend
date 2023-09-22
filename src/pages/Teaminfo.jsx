@@ -11,14 +11,14 @@ export default function Teaminfo() {
 
   const getTeam = async () => {
     try {
-      const res = await axios.get("/api/v1/teams/frontend-team", {
+      const res = await axios.get("/api/v1/teams/me", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
       console.log(res)
       setTeamName(res?.data?.name)
-      setMembers(res?.data?.members)
+      setMembers(res?.data?.members || [])
     } catch (error) {
       setTeamName("Oops.")
       setMembers(["Err..."])
@@ -40,7 +40,7 @@ export default function Teaminfo() {
           className="w-16 h-16 rounded-full ml-8 mr-16"
         /> */}
         <div className="flex flex-col">
-          <h1 className="text-xl">{name}</h1>
+          <p className="text-xl">{name}</p>
           {/* <p className="text-sm">{leader ? "Teamleader" : ""}</p> */}
 
         </div>
@@ -75,7 +75,7 @@ export default function Teaminfo() {
         <div className="flex flex-col">
           {members.map((member, index) => {
             return (
-              <Member name={member} key={`member${index}`} profile="" />
+              <Member name={member.name} key={`member${index}`} profile="" />
             )
           })}
         </div>

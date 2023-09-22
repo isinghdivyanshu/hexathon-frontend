@@ -26,3 +26,25 @@ p {
   font-family: "Space Grotesk";
   color: rgba(234, 211, 193, 0.6);
 }
+
+/* Always show scrollbar */
+.scrollbar-w-2::-webkit-scrollbar {
+  width: 12px; /* Adjust the width as needed */
+}
+
+/* Scrollbar track */
+.scrollbar-track-red::-webkit-scrollbar-track {
+  background-color: rgb(147, 51, 51); /* Red background color for the scrollbar track */
+  border-radius: 20px;
+}
+
+/* Scrollbar thumb */
+.scrollbar-thumb-red-dark::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.516); /* Dark red color for the scrollbar thumb */
+  border-radius: 6px; /* Adjust the border radius as needed */
+}
+
+/* Hide scrollbar buttons (optional) */
+.scrollbar-w-2::-webkit-scrollbar-button {
+  display: none;
+}

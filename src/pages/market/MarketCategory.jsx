@@ -33,10 +33,10 @@ export default function MarketCategory() {
   return (
     <Layout title={"Marketplace"}>
       <h1 className="text-xl my-6 font-DelaGothicOne text-heading">{catName}</h1>
-      <div className="flex gap-8 overflow-x-scroll no-scrollbar">
+      <div className="flex gap-8 pb-6 overflow-x-scroll scrollbar-w-2 scrollbar-track-red scrollbar-thumb-red-dark">
         {catItems?.map((item, i) => {
             return (
-                <Card price={item.price} url={item.photo_url} name={item.name} key={`item${i}`} />
+                <Card incart={item.in_cart} price={item.price} id={item.id} url={item.photo_url} name={item.name} key={`item${i}`} />
             )
         })}
       </div>

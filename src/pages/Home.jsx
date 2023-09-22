@@ -3,12 +3,45 @@ import Layout from "../components/Layout";
 import HexathonLogo from "../assets/hexathonLogo.svg";
 import DownArrow from "../assets/downArrow.svg";
 import { useState, useEffect } from "react";
-import axios from '../axios'
-import { toast } from 'react-toastify';
+import axios from "../axios";
+import { toast } from "react-toastify";
 
 export default function Home() {
   //react function to expand a div for overflow
   const [isExpanded, setIsExpanded] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [confirmedProble, setConfirmed] = useState(false);
+  const [cart, setCart] = useState({});
+
+  const getCategories = async () => {
+    try {
+      const response = await axios.get("/api/v1/categories", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCategories(response.data);
+    } catch (error) {
+      toast.error(error?.response?.data?.detail);
+    }
+  };
+
+  const getCart = async () => {
+    try {
+      const res = await axios.get("/api/v1/carts", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCart(res.data.items_added);
+    } catch (error) {
+      if (error?.response) {
+        toast.error(error?.response?.data?.detail);
+      } else {
+        toast.error(error?.message);
+      }
+    }
+  };
 
   const toggleExpansion = () => {
     console.log("clicked");
@@ -16,43 +49,82 @@ export default function Home() {
     console.log(isExpanded);
   };
 
-  const [psTitle, setPSTitle] = useState("")
-  const [psDescription, setPSDescription] = useState("")
+  const [psTitle, setPSTitle] = useState("");
+  const [psDescription, setPSDescription] = useState("");
+  const [psOneLiner, setPSOneLiner] = useState("")
+  const [checkedOut, isCheckedOut] = useState(false);
 
   const getPS = async () => {
     try {
       const res = await axios.get("/api/v1/problemStatements/team", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      setPSDescription(res?.data?.description)
-      setPSTitle(res?.data?.name)
-      console.log(res.data)
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setPSDescription(res?.data?.description);
+      setPSTitle(res?.data?.name);
+      setPSOneLiner(res?.data?.one_liner)
+      setConfirmed(res?.data?.generations_left === 0);
+      console.log(res.data);
     } catch (error) {
-      toast.error(error?.response?.data?.detail)
+      toast.error(error?.response?.data?.detail);
     }
-  }
+  };
+
+  const getTeam = async () => {
+    try {
+      const res = await axios.get("/api/v1/teams/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      // console.log(res)
+      isCheckedOut(res.data.items_count !== 0);
+    } catch (error) {
+      toast.error(error?.response?.data?.detail);
+    }
+  };
 
   useEffect(() => {
-    getPS()
-  }, [])
+    getCart();
+    getCategories();
+    getTeam();
+    getPS();
+  }, []);
 
-  function OwnedAssets({ assetType, asset }) {
+  function OwnedAssets({ name, desc, items }) {
     return (
-      <div className=" relative bg-[#752E324D] p-5 border-2 border-white rounded m-2 w-64 h-32 ">
-        <h1 className="w-full text-xl">{assetType}</h1>
-        <p className="absolute bottom-5">{asset}</p>
+      <div className="lg:w-[23%] w-[33%] flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
+        <div className="w-full flex flex-col gap-3">
+          <h1 className="text-lg text-heading font-bold tracking-wider">
+            {name}
+          </h1>
+          <p className="text-sm w-1/2 text-content">{desc}</p>
+        </div>
+        <div className="w-full flex justify-between mt-4">
+          {items?.length && (
+            <div className="text-green-500">
+              Owned: {items?.map((item) => `${item.name} `)}
+              {`(${items?.length})`}
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 
   return (
     <Layout title={"Welcome"}>
-      <div className={`${(psTitle==="" && psDescription==="") ? "hidden":"block"}`}>
+      <div
+        className={`${
+          (psTitle === "" && psDescription === "") || !confirmedProble
+            ? "hidden"
+            : "block"
+        }`}
+      >
         <h1 className="w-max mt-3 mb-6 text-2xl">Problem Statement</h1>
         <div
-          className={`bg-[#752E324D] p-5 border-2 border-white rounded overflow-hidden transition-max-height ${
+          className={`bg-[#752E324D] p-5 border-2 border-white/10 rounded overflow-hidden transition-max-height ${
             isExpanded ? "max-h-full" : "max-h-60"
           }`}
         >
@@ -64,27 +136,34 @@ export default function Home() {
               onClick={toggleExpansion}
             />
           </div>
-          <p className="text-sm">
-            {psDescription}
-          </p>
+          <p className="text-sm ml-3">{psOneLiner}</p>
+          <p className="text-sm ml-3 mt-3">{psDescription}</p>
         </div>
       </div>
       {/* {OwenedAssets?<OwenedAssets/>:null} */}
 
-      <div>
+      <div className={`${checkedOut ? "block" : "hidden"} mt-8`}>
         <div>
           <h1 className="w-full mt-3 mb-6 text-2xl">Owned Assets</h1>
         </div>
-        <div className="flex flex-wrap">
-          <OwnedAssets assetType="Typefaces" asset="Poppins, Inter" />
-          <OwnedAssets assetType="Theme" asset="Minimalism" />
-          <OwnedAssets assetType="Color Pallete" asset="Neo-pop" />
-          <OwnedAssets assetType="Illustration Style" asset="Isometric" />
+        <div className="flex flex-wrap gap-3">
+          {categories?.map((cat, i) => {
+            return (
+              <OwnedAssets
+                items={cart[cat.id]}
+                desc={cat.description}
+                maxnum={cat.max_items}
+                name={cat.name}
+                path={cat.id}
+                key={`category${i}`}
+              />
+            );
+          })}
         </div>
       </div>
 
       <div>
-        <h1 className="w-full mt-6 mb-6 text-2xl">About</h1>
+        <h1 className="w-full mt-8 mb-6 text-2xl">About</h1>
         <div className="flex lg:flex-row flex-col w-full">
           <p className="lg:w-3/5 text-sm">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis eaque
