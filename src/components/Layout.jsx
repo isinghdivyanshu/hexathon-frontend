@@ -232,7 +232,7 @@ export default function Layout({ children, title }) {
         </div>
 
         {/* Content */}
-        <div className="bg-[#250A19B2] text-white p-6 rounded-lg shadow-md">
+        <div className="bg-[#250A19B2] text-white p-5 rounded-lg shadow-md">
           {children}
         </div>
       </div>
