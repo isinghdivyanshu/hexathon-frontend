@@ -20,6 +20,19 @@ const useStore = create((set) => ({
       set({ submissionActive: true });
     }
   },
+
+  siteActive: false,
+
+  // Function to check and set submissionActive
+  checkAndUpdateSiteStatus: () => {
+    const targetTime = new Date(import.meta.env.VITE_TARGET_TIME); // Target time (23rd September at 3 AM)
+
+    const currentTime = new Date(); // Current time
+
+    if (currentTime >= targetTime) {
+      set({ siteActive: true });
+    }
+  },
 }));
 
 export default useStore;
