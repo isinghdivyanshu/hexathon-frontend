@@ -137,7 +137,7 @@ export default function Home() {
             />
           </div>
           <p className="text-sm ml-3">{psOneLiner}</p>
-          <p className="text-sm ml-3 mt-3">{psDescription}</p>
+          <p className={`text-sm ml-3 mt-3 ${!isExpanded ? "hidden" : ""}`}>{psDescription}</p>
         </div>
       </div>
       {/* {OwenedAssets?<OwenedAssets/>:null} */}
