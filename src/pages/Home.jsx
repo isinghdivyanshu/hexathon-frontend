@@ -65,7 +65,7 @@ export default function Home() {
       setPSDescription(res?.data?.description);
       setPSTitle(res?.data?.name);
       setPSOneLiner(res?.data?.one_liner);
-      setConfirmed(res?.data?.generations_left === 0);
+      setConfirmed(res?.data?.generations_left === 0 || res?.data?.statement_confirmed);
       console.log(res.data);
     } catch (error) {
       toast.error(error?.response?.data?.detail);
@@ -95,12 +95,12 @@ export default function Home() {
 
   function OwnedAssets({ name, desc, items }) {
     return (
-      <div className="lg:w-[23%] w-[33%] flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
+      <div className="lg:w-[32%] md:w-[47%] w-[70%] flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
         <div className="w-full flex flex-col gap-3">
           <h1 className="text-lg text-heading font-bold tracking-wider">
             {name}
           </h1>
-          <p className="text-sm w-1/2 text-content">{desc}</p>
+          <p className="text-sm w-4/5 text-content">{desc}</p>
         </div>
         <div className="w-full flex justify-between mt-4">
           {items?.length && (
@@ -167,19 +167,11 @@ export default function Home() {
 
       <div>
         <h1 className="w-full mt-8 mb-6 text-2xl">About</h1>
-        <div className="flex lg:flex-row flex-col w-full">
+        <div className="flex lg:flex-row flex-col lg:items-center w-full">
           <p className="lg:w-3/5 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis eaque
-            delectus quo at molestiae itaque, aspernatur quam consequuntur
-            beatae sunt mollitia ad! Accusantium quasi magnam aut eos explicabo.
-            Dolorem, earum? Lorem ipsum dolor sit, amet consectetur adipisicing
-            elit. Error, quo repudiandae! Quae dolore aut optio mollitia
-            reprehenderit iure saepe! Eos, tempore ipsum hic numquam cum
-            sapiente culpa vitae veritatis fugit. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Quia, aspernatur perspiciatis
-            reprehenderit quod natus, recusandae, optio consequuntur magnam esse
-            alias neque totam voluptatem inventore tenetur non consectetur
-            impedit id sapiente?
+          Hexathon&apos;23 is a 24 hour long beginner-friendly design hackathon
+            that gives budding UI/UX designers and enthusiasts a platform to
+            work on a variety of real-life problem statements.
           </p>
           <img
             src={HexathonLogo}

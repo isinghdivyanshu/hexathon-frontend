@@ -22,7 +22,7 @@ export default function Landing() {
 
       <Link
         to={"/login"}
-        className="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none w-fit mt-auto mb-16"
+        className="bg-red-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-red-700 focus:outline-none w-fit mt-auto mb-16"
       >
         Get Started
       </Link>
