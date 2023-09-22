@@ -5,6 +5,7 @@ import DownArrow from "../assets/downArrow.svg";
 import { useState, useEffect } from "react";
 import axios from "../axios";
 import { toast } from "react-toastify";
+import timeline from "../assets/timeline.svg";
 
 export default function Home() {
   //react function to expand a div for overflow
@@ -51,7 +52,7 @@ export default function Home() {
 
   const [psTitle, setPSTitle] = useState("");
   const [psDescription, setPSDescription] = useState("");
-  const [psOneLiner, setPSOneLiner] = useState("")
+  const [psOneLiner, setPSOneLiner] = useState("");
   const [checkedOut, isCheckedOut] = useState(false);
 
   const getPS = async () => {
@@ -63,7 +64,7 @@ export default function Home() {
       });
       setPSDescription(res?.data?.description);
       setPSTitle(res?.data?.name);
-      setPSOneLiner(res?.data?.one_liner)
+      setPSOneLiner(res?.data?.one_liner);
       setConfirmed(res?.data?.generations_left === 0);
       console.log(res.data);
     } catch (error) {
@@ -137,7 +138,9 @@ export default function Home() {
             />
           </div>
           <p className="text-sm ml-3">{psOneLiner}</p>
-          <p className={`text-sm ml-3 mt-3 ${!isExpanded ? "hidden" : ""}`}>{psDescription}</p>
+          <p className={`text-sm ml-3 mt-3 ${!isExpanded ? "hidden" : ""}`}>
+            {psDescription}
+          </p>
         </div>
       </div>
       {/* {OwenedAssets?<OwenedAssets/>:null} */}
@@ -187,11 +190,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col bg-[#752E324D] p-5 border-2 mt-8 border-white rounded">
         <h1 className="w-full mt-3 mb-6 text-2xl">Timeline</h1>
-        <img
-          src={HexathonLogo}
-          alt="Hexathon Logo"
-          className="max-w-[45rem] w-80 h-auto"
-        />
+        <img src={timeline} alt="Hexathon Logo" className="w-full h-96" />
       </div>
     </Layout>
   );
