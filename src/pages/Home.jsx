@@ -95,12 +95,12 @@ export default function Home() {
 
   function OwnedAssets({ name, desc, items }) {
     return (
-      <div className="lg:w-[23%] w-[33%] flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
+      <div className="lg:w-[32%] md:w-[47%] w-[70%] flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
         <div className="w-full flex flex-col gap-3">
           <h1 className="text-lg text-heading font-bold tracking-wider">
             {name}
           </h1>
-          <p className="text-sm w-1/2 text-content">{desc}</p>
+          <p className="text-sm w-4/5 text-content">{desc}</p>
         </div>
         <div className="w-full flex justify-between mt-4">
           {items?.length && (
