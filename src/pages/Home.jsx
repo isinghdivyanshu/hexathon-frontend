@@ -3,15 +3,15 @@ import Layout from "../components/Layout";
 import HexathonLogo from "../assets/hexathonLogo.svg";
 import DownArrow from "../assets/downArrow.svg";
 import { useState, useEffect } from "react";
-import axios from '../axios'
-import { toast } from 'react-toastify';
+import axios from "../axios";
+import { toast } from "react-toastify";
 
 export default function Home() {
   //react function to expand a div for overflow
   const [isExpanded, setIsExpanded] = useState(false);
-  const [categories, setCategories] = useState([])
-  const [confirmedProble, setConfirmed]= useState(false)
-  const [cart, setCart] = useState({})
+  const [categories, setCategories] = useState([]);
+  const [confirmedProble, setConfirmed] = useState(false);
+  const [cart, setCart] = useState({});
 
   const getCategories = async () => {
     try {
@@ -30,18 +30,18 @@ export default function Home() {
     try {
       const res = await axios.get("/api/v1/carts", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      setCart(res.data.items_added)
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCart(res.data.items_added);
     } catch (error) {
       if (error?.response) {
-        toast.error(error?.response?.data?.detail)
+        toast.error(error?.response?.data?.detail);
       } else {
-        toast.error(error?.message)
+        toast.error(error?.message);
       }
     }
-  }
+  };
 
   const toggleExpansion = () => {
     console.log("clicked");
@@ -49,68 +49,77 @@ export default function Home() {
     console.log(isExpanded);
   };
 
-  const [psTitle, setPSTitle] = useState("")
-  const [psDescription, setPSDescription] = useState("")
-  const [checkedOut, isCheckedOut] = useState(false)
+  const [psTitle, setPSTitle] = useState("");
+  const [psDescription, setPSDescription] = useState("");
+  const [checkedOut, isCheckedOut] = useState(false);
 
   const getPS = async () => {
     try {
       const res = await axios.get("/api/v1/problemStatements/team", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-      setPSDescription(res?.data?.description)
-      setPSTitle(res?.data?.name)
-      setConfirmed(res?.data?.generations_left===0)
-      console.log(res.data)
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setPSDescription(res?.data?.description);
+      setPSTitle(res?.data?.name);
+      setConfirmed(res?.data?.generations_left === 0);
+      console.log(res.data);
     } catch (error) {
-      toast.error(error?.response?.data?.detail)
+      toast.error(error?.response?.data?.detail);
     }
-  }
+  };
 
   const getTeam = async () => {
     try {
       const res = await axios.get("/api/v1/teams/me", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      })
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       // console.log(res)
-      isCheckedOut(res.data.items_count!==0)
+      isCheckedOut(res.data.items_count !== 0);
     } catch (error) {
-      toast.error(error?.response?.data?.detail)
+      toast.error(error?.response?.data?.detail);
     }
-  }
+  };
 
   useEffect(() => {
-    getCart()
-    getCategories()
-    getTeam()
-    getPS()
-  }, [])
+    getCart();
+    getCategories();
+    getTeam();
+    getPS();
+  }, []);
 
   function OwnedAssets({ name, desc, items }) {
     return (
-      <div className="w-full flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
-      <div className="w-full flex flex-col gap-3">
-        <h1 className="text-lg text-heading font-bold tracking-wider">
-          {name}
-        </h1>
-        <p className="text-sm w-1/2 text-content">
-          {desc}
-        </p>
+      <div className="lg:w-[23%] w-[33%] flex flex-col justify-between bg-[#752E324D] p-5 border-2 border-white/10 rounded-md font-SpaceGrotesk">
+        <div className="w-full flex flex-col gap-3">
+          <h1 className="text-lg text-heading font-bold tracking-wider">
+            {name}
+          </h1>
+          <p className="text-sm w-1/2 text-content">{desc}</p>
+        </div>
+        <div className="w-full flex justify-between mt-4">
+          {items?.length && (
+            <div className="text-green-500">
+              Owned: {items?.map((item) => `${item.name} `)}
+              {`(${items?.length})`}
+            </div>
+          )}
+        </div>
       </div>
-      <div className="w-full flex justify-between mt-4">
-        {items?.length && <div className="text-green-500">Owned: {items?.map((item) => `${item.name} `)}{`(${items?.length})`}</div>}
-      </div>
-    </div>
     );
   }
 
   return (
     <Layout title={"Welcome"}>
-      <div className={`${(psTitle==="" && psDescription==="") || !confirmedProble ? "hidden":"block"}`}>
+      <div
+        className={`${
+          (psTitle === "" && psDescription === "") || !confirmedProble
+            ? "hidden"
+            : "block"
+        }`}
+      >
         <h1 className="w-max mt-3 mb-6 text-2xl">Problem Statement</h1>
         <div
           className={`bg-[#752E324D] p-5 border-2 border-white rounded overflow-hidden transition-max-height ${
@@ -125,21 +134,26 @@ export default function Home() {
               onClick={toggleExpansion}
             />
           </div>
-          <p className="text-sm">
-            {psDescription}
-          </p>
+          <p className="text-sm ml-3">{psDescription}</p>
         </div>
       </div>
       {/* {OwenedAssets?<OwenedAssets/>:null} */}
 
-      <div className={`${checkedOut ? "block":"hidden"} mt-8`}>
+      <div className={`${checkedOut ? "block" : "hidden"} mt-8`}>
         <div>
           <h1 className="w-full mt-3 mb-6 text-2xl">Owned Assets</h1>
         </div>
         <div className="flex flex-wrap gap-3">
           {categories?.map((cat, i) => {
             return (
-              <OwnedAssets items={cart[cat.id]} desc={cat.description} maxnum={cat.max_items} name={cat.name} path={cat.id} key={`category${i}`} />
+              <OwnedAssets
+                items={cart[cat.id]}
+                desc={cat.description}
+                maxnum={cat.max_items}
+                name={cat.name}
+                path={cat.id}
+                key={`category${i}`}
+              />
             );
           })}
         </div>
