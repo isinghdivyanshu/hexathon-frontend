@@ -51,6 +51,7 @@ export default function Home() {
 
   const [psTitle, setPSTitle] = useState("");
   const [psDescription, setPSDescription] = useState("");
+  const [psOneLiner, setPSOneLiner] = useState("")
   const [checkedOut, isCheckedOut] = useState(false);
 
   const getPS = async () => {
@@ -62,6 +63,7 @@ export default function Home() {
       });
       setPSDescription(res?.data?.description);
       setPSTitle(res?.data?.name);
+      setPSOneLiner(res?.data?.one_liner)
       setConfirmed(res?.data?.generations_left === 0);
       console.log(res.data);
     } catch (error) {
@@ -122,7 +124,7 @@ export default function Home() {
       >
         <h1 className="w-max mt-3 mb-6 text-2xl">Problem Statement</h1>
         <div
-          className={`bg-[#752E324D] p-5 border-2 border-white rounded overflow-hidden transition-max-height ${
+          className={`bg-[#752E324D] p-5 border-2 border-white/10 rounded overflow-hidden transition-max-height ${
             isExpanded ? "max-h-full" : "max-h-60"
           }`}
         >
@@ -134,7 +136,8 @@ export default function Home() {
               onClick={toggleExpansion}
             />
           </div>
-          <p className="text-sm ml-3">{psDescription}</p>
+          <p className="text-sm ml-3">{psOneLiner}</p>
+          <p className="text-sm ml-3 mt-3">{psDescription}</p>
         </div>
       </div>
       {/* {OwenedAssets?<OwenedAssets/>:null} */}

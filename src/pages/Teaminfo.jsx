@@ -75,7 +75,7 @@ export default function Teaminfo() {
         <div className="flex flex-col">
           {members.map((member, index) => {
             return (
-              <Member name={member} key={`member${index}`} profile="" />
+              <Member name={member.name} key={`member${index}`} profile="" />
             )
           })}
         </div>
