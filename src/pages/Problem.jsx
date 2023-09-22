@@ -53,14 +53,14 @@ export default function Problem() {
   
   const confirmPS = async () => {
     try {
-      const res = await axios.put("/api/v1/problemStatements/confirm",{}, {
+      const res = await axios.post("/api/v1/problemStatements/confirm",{}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         },
       })
       setPSDescription(res?.data?.description)
       setPSTitle(res?.data?.name)
-      setChances(res?.data?.generations_left)
+      setChances(0)
       console.log(res.data)
     } catch (error) {
       if (error?.response) {

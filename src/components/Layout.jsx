@@ -10,7 +10,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import UploadIcon from "@mui/icons-material/Upload";
 import axios from "../axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import useStore from '../store';
 
