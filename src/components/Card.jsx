@@ -2,9 +2,11 @@ import axios from "../axios";
 import hexcoin from "../assets/hexcoin.svg";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import useStore from '../store';
 /* eslint-disable react/prop-types */
 export default function Card({ name, id, price, url, incart }) {
   const [added, setAdded] = useState(incart);
+  const {setAmount} = useStore()
   const addToCart = async () => {
     try {
       const response = await axios.post(
@@ -18,6 +20,7 @@ export default function Card({ name, id, price, url, incart }) {
       );
       setAdded(true);
       localStorage.setItem("amount", response.data.amount_left);
+      setAmount(response.data.amount_left)
     } catch (error) {
       if (error?.response) {
         toast.error(error?.response?.data?.detail);
@@ -35,6 +38,7 @@ export default function Card({ name, id, price, url, incart }) {
       });
       setAdded(false);
       localStorage.setItem("amount", response.data.amount_left);
+      setAmount(response.data.amount_left)
     } catch (error) {
       if (error?.response) {
         toast.error(error?.response?.data?.detail);

@@ -12,10 +12,12 @@ import UploadIcon from "@mui/icons-material/Upload";
 import axios from "../axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import useStore from '../store';
 
 export default function Layout({ children, title }) {
   // const [amount, setAmount] = useState(0)
   // const navigate = useNavigate();
+  const {amount, setAmount} = useStore()
 
   const [checkedOut, isCheckedOut] = useState(true);
   const [confirmedProblem, setConfirmed] = useState(true)
@@ -28,6 +30,7 @@ export default function Layout({ children, title }) {
         },
       });
       localStorage.setItem("amount", res.data.amount_left);
+      setAmount(res.data.amount_left)
     } catch (error) {
       if (error?.response) {
         toast.error(error?.response?.data?.detail);
@@ -229,7 +232,8 @@ export default function Layout({ children, title }) {
           </h1>
           <div className={`flex items-center w-32 h-10 rounded-md bg-[#250A19B2] justify-evenly font-DelaGothicOne ${checkedOut ? "hidden" : " "}`}>
             <img src={hexcoin} className="inline w-[25%] h-[90%]" />
-            {localStorage.getItem("amount")}
+            {/* {localStorage.getItem("amount")} */}
+            {amount}
           </div>
         </div>
 
