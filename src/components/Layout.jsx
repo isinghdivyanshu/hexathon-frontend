@@ -10,15 +10,18 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import UploadIcon from "@mui/icons-material/Upload";
 import axios from "../axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
+import useStore from '../store';
 
 export default function Layout({ children, title }) {
   // const [amount, setAmount] = useState(0)
   // const navigate = useNavigate();
+  const {amount, setAmount} = useStore()
 
-  const [checkedOut, isCheckedOut] = useState(true);
-  const [confirmedProblem, setConfirmed] = useState(true)
+  const {checkedOut, isCheckedOut} = useStore();
+  const {confirmedProblem, setConfirmed} = useStore();
+  const {submissionActive, checkAndUpdateSubmissionStatus} = useStore();
 
   const getCart = async () => {
     try {
@@ -28,6 +31,7 @@ export default function Layout({ children, title }) {
         },
       });
       localStorage.setItem("amount", res.data.amount_left);
+      setAmount(res.data.amount_left)
     } catch (error) {
       if (error?.response) {
         toast.error(error?.response?.data?.detail);
@@ -67,6 +71,7 @@ export default function Layout({ children, title }) {
   }
 
   useEffect(() => {
+    checkAndUpdateSubmissionStatus()
     getCart();
     getTeam();
     getPS();
@@ -184,7 +189,17 @@ export default function Layout({ children, title }) {
                 </>
               )}
             </NavLink>
-            <NavLink
+            {!submissionActive ? (
+              <div className="p-2  px-3 rounded-md cursor-default font-SpaceGrotesk flex items-center gap-2 opacity-30">
+              <p>
+                <UploadIcon />
+              </p>
+              <p>
+                Submission
+              </p>
+            </div>
+            ) : (
+              <NavLink
               className={({ isActive, isPending }) =>
                 (isPending ? "pending" : isActive ? "text-white " : "") +
                 " p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk flex items-center gap-2"
@@ -202,6 +217,7 @@ export default function Layout({ children, title }) {
                 </>
               )}
             </NavLink>
+            )}
           </ul>
         </nav>
 
@@ -229,7 +245,8 @@ export default function Layout({ children, title }) {
           </h1>
           <div className={`flex items-center w-32 h-10 rounded-md bg-[#250A19B2] justify-evenly font-DelaGothicOne ${checkedOut ? "hidden" : " "}`}>
             <img src={hexcoin} className="inline w-[25%] h-[90%]" />
-            {localStorage.getItem("amount")}
+            {/* {localStorage.getItem("amount")} */}
+            {amount}
           </div>
         </div>
 

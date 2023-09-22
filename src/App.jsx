@@ -13,8 +13,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MarketCategory from "./pages/market/MarketCategory";
 import warning from "./assets/mobilewarning.svg";
+import useStore from './store';
+import { useEffect } from 'react';
 
 function App() {
+  const {siteActive, checkAndUpdateSiteStatus} =useStore()
+  useEffect(()=>{
+    checkAndUpdateSiteStatus()
+    console.log(siteActive)
+  },[])
   return (
     <>
       <ToastContainer
@@ -29,7 +36,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-      <div className="md:block hidden">
+      <div className={`md:block hidden ${!siteActive ? "!hidden":""}`}>
         <Router>
           <Routes>
             <Route path="/" element={<Landing />}></Route>
@@ -52,6 +59,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      <p className={`text-black ${siteActive ? "!hidden":""}`}>Nothing to see here. Yet.</p>
       <div
         className="md:hidden block w-screen h-screen"
         style={{ backgroundImage: `url(${warning})` }}
