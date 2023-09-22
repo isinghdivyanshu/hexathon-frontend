@@ -19,8 +19,8 @@ export default function Layout({ children, title }) {
   // const navigate = useNavigate();
   const {amount, setAmount} = useStore()
 
-  const [checkedOut, isCheckedOut] = useState(true);
-  const [confirmedProblem, setConfirmed] = useState(true)
+  const {checkedOut, isCheckedOut} = useStore();
+  const {confirmedProblem, setConfirmed} = useStore();
 
   const getCart = async () => {
     try {
