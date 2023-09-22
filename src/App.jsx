@@ -59,6 +59,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      <p className={`text-black ${siteActive ? "!hidden":""}`}>Nothing to see here. Yet.</p>
       <div
         className="md:hidden block w-screen h-screen"
         style={{ backgroundImage: `url(${warning})` }}
