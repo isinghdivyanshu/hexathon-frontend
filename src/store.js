@@ -12,7 +12,7 @@ const useStore = create((set) => ({
 
   // Function to check and set submissionActive
   checkAndUpdateSubmissionStatus: () => {
-    const targetTime = new Date('2023-09-23T03:00:00'); // Target time (23rd September at 3 AM)
+    const targetTime = new Date(import.meta.env.VITE_SUBMISSION_TIME); // Target time (23rd September at 3 AM)
 
     const currentTime = new Date(); // Current time
 
