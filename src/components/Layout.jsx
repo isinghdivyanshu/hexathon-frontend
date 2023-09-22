@@ -17,8 +17,8 @@ export default function Layout({ children, title }) {
   // const [amount, setAmount] = useState(0)
   // const navigate = useNavigate();
 
-  const [checkedOut, isCheckedOut] = useState(false);
-  const [confirmedProblem, setConfirmed] = useState(false)
+  const [checkedOut, isCheckedOut] = useState(true);
+  const [confirmedProblem, setConfirmed] = useState(true)
 
   const getCart = async () => {
     try {
@@ -134,7 +134,8 @@ export default function Layout({ children, title }) {
                     </p>
                   </>
                 )}
-              </NavLink>}
+              </NavLink>
+            }
 
             {checkedOut ?
               <div className="p-2  px-3 rounded-md cursor-default font-SpaceGrotesk flex items-center gap-2 opacity-30">
@@ -163,7 +164,8 @@ export default function Layout({ children, title }) {
                     </p>
                   </>
                 )}
-              </NavLink>}
+              </NavLink>
+            }
             <NavLink
               className={({ isActive, isPending }) =>
                 (isPending ? "pending" : isActive ? "text-white " : "") +

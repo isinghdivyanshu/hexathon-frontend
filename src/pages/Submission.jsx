@@ -69,7 +69,7 @@ export default function Submission() {
           },
         }
       );
-      console.log(response);
+      toast.success("Submission Successful");
     } catch (error) {
       toast.error(error?.response?.data?.detail);
     }
