@@ -21,6 +21,7 @@ export default function Layout({ children, title }) {
 
   const {checkedOut, isCheckedOut} = useStore();
   const {confirmedProblem, setConfirmed} = useStore();
+  const {submissionActive, checkAndUpdateSubmissionStatus} = useStore();
 
   const getCart = async () => {
     try {
@@ -70,6 +71,7 @@ export default function Layout({ children, title }) {
   }
 
   useEffect(() => {
+    checkAndUpdateSubmissionStatus()
     getCart();
     getTeam();
     getPS();
@@ -187,7 +189,17 @@ export default function Layout({ children, title }) {
                 </>
               )}
             </NavLink>
-            <NavLink
+            {!submissionActive ? (
+              <div className="p-2  px-3 rounded-md cursor-default font-SpaceGrotesk flex items-center gap-2 opacity-30">
+              <p>
+                <UploadIcon />
+              </p>
+              <p>
+                Submission
+              </p>
+            </div>
+            ) : (
+              <NavLink
               className={({ isActive, isPending }) =>
                 (isPending ? "pending" : isActive ? "text-white " : "") +
                 " p-2 hover:bg-black hover:bg-opacity-40 px-3 rounded-md cursor-pointer font-SpaceGrotesk flex items-center gap-2"
@@ -205,6 +217,7 @@ export default function Layout({ children, title }) {
                 </>
               )}
             </NavLink>
+            )}
           </ul>
         </nav>
 
