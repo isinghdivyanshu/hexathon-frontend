@@ -7,6 +7,18 @@ const useStore = create((set) => ({
   checkedOut: false,
   isCheckedOut: (status) => set({ checkedOut: status }),
   confirmedProblem: false,
+
+  checkAndUpdateCheckoutStatusOnTimeout: () => {
+    const targetTime = new Date(import.meta.env.VITE_FINAL_CHECKOUT);
+
+    const currentTime = new Date(); // Current time
+
+    if (currentTime >= targetTime) {
+      set({ checkedOut: true });
+      set({ confirmedProblem: true });
+    }
+  },
+
   setConfirmed: (status) => set({ confirmedProblem: status }),
   submissionActive: false,
 
