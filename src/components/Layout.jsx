@@ -48,7 +48,7 @@ export default function Layout({ children, title }) {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
-      setConfirmed(res?.data?.generations_left === 0)
+      setConfirmed(res?.data?.generations_left === 0 || res?.data?.statement_confirmed)
       console.log(res.data)
     } catch (error) {
       toast.error(error?.response?.data?.detail)
