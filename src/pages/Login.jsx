@@ -1,34 +1,34 @@
 import logo from "../assets/logo.svg";
 import Background from "../assets/defaultbg.svg";
-import { useState } from 'react';
-import axios from '../axios'
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import axios from "../axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [teamName, setTeamName] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/v1/auth/login', {
+      const response = await axios.post("/api/v1/auth/login", {
         name: teamName,
         password,
       });
 
-      if (response.status ===200 && response.data) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('amount', response.data.amount);
-        console.log(response.data)
-        navigate("/dashboard/home")
+      if (response.status === 200 && response.data) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("amount", response.data.amount);
+        console.log(response.data);
+        navigate("/dashboard/home");
       }
     } catch (error) {
-      // toast 
-      console.log(error)
-      toast.error(error.response.data.detail)
+      // toast
+      console.log(error);
+      toast.error(error.response.data.detail);
     }
   };
 
@@ -63,7 +63,7 @@ export default function Login() {
               id="email"
               placeholder="Enter your team name"
               value={teamName}
-              onChange={e=>setTeamName(e.currentTarget.value)}
+              onChange={(e) => setTeamName(e.currentTarget.value)}
             />
           </div>
           <div className="mb-4">
@@ -80,7 +80,7 @@ export default function Login() {
               required
               placeholder="Enter your password"
               value={password}
-              onChange={e=>setPassword(e.currentTarget.value)}
+              onChange={(e) => setPassword(e.currentTarget.value)}
             />
           </div>
           <div className="mb-4 text-right">
@@ -88,7 +88,7 @@ export default function Login() {
               // to={"#"}
               className="text-white text-sm font-medium"
             >
-              Forgot Password? 
+              Forgot Password?
             </p>
             <p
               // to={"#"}
@@ -96,11 +96,10 @@ export default function Login() {
             >
               Approach a GDSC member or the check-in desk.
             </p>
-            
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-700 focus:outline-none focus:bg-red-700"
           >
             Sign In
           </button>
