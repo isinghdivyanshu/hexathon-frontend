@@ -19,7 +19,7 @@ export default function Layout({ children, title }) {
   // const navigate = useNavigate();
   const {amount, setAmount} = useStore()
 
-  const {checkedOut, isCheckedOut} = useStore();
+  const {checkedOut, isCheckedOut, checkAndUpdateCheckoutStatusOnTimeout} = useStore();
   const {confirmedProblem, setConfirmed} = useStore();
   const {submissionActive, checkAndUpdateSubmissionStatus} = useStore();
 
@@ -49,6 +49,9 @@ export default function Layout({ children, title }) {
         }
       })
       setConfirmed(res?.data?.generations_left === 0 || res?.data?.statement_confirmed)
+      if (!(res?.data?.generations_left === 0 || res?.data?.statement_confirmed)) {
+        checkAndUpdateCheckoutStatusOnTimeout()
+      }
       console.log(res.data)
     } catch (error) {
       toast.error(error?.response?.data?.detail)
@@ -65,6 +68,9 @@ export default function Layout({ children, title }) {
       })
       // console.log(res)
       isCheckedOut(res.data.items_count !== 0)
+      if (res.data.items_count===0) {
+        checkAndUpdateCheckoutStatusOnTimeout()
+      }
     } catch (error) {
       toast.error(error?.response?.data?.detail)
     }
