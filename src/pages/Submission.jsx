@@ -25,6 +25,8 @@ const customStyles = {
 export default function Submission() {
   const [docUrlError, setDocUrlError] = useState(" "); // Validation error for documentation URL
   const [figmaUrlError, setFigmaUrlError] = useState(" "); // Validation error for Figma URL
+  const [currDoc, setCurrDoc] = useState("")
+  const [currFigma, setCurrFigma] = useState("")
   const [DocURL, setDocURL] = useState("");
   const [FigmaURL, setFigmaURL] = useState("");
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
@@ -47,9 +49,25 @@ export default function Submission() {
     }
   };
 
+  const getCurrSubmission = async() => {
+    try {
+      const res = await axios.get("/api/v1/submissions/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      setCurrDoc(res.data.doc_url)
+      setCurrFigma(res.data.figma_url)
+    } catch (error) {
+      // toast.error("Oops.")
+      console.log("No submissions yet.")
+    }
+  }
+
   useEffect(() => {
     validateInput("documentation", DocURL);
     validateInput("figma", FigmaURL);
+    getCurrSubmission()
   }, []);
 
   const Submit = async (e) => {
@@ -158,6 +176,15 @@ export default function Submission() {
           </button>
         </div>
       </form>
+      
+      {currDoc !== "" && currFigma!=="" && (
+        <>
+        <p>Currently Submitted Documentation</p>
+        <p>{currDoc}</p>
+        <p className='mt-4'>Currently Submitted Figma URL</p>
+        <p>{currFigma}</p>
+        </>
+      )}
 
       <Modal
         isOpen={isCheckoutModalOpen}
